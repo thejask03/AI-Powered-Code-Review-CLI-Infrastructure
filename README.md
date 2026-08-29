@@ -5,21 +5,22 @@ AI-powered, schema-enforced code review CLI for GitHub PRs.
 ## What it does
 
 Point it at a GitHub PR and it:
-1. **Fetches** the diff (scoped to new commits if it's a re-run)
+1. **Fetches** the diff and scoped to new commits if it's a re-run
 2. **Chunks** the diff at function/class boundaries using tree-sitter (falls back to a heuristic for unsupported languages)
-3. **Reviews** each chunk with Claude, producing schema-constrained findings
-4. **Verifies** each finding with a second LLM pass — fail-closed, so unverifiable findings are rejected
-5. **Grounds** every finding against the actual repo (file exists? line in range? snippet matches?) — drops or downweights anything that doesn't check out; on a re-run, also re-grounds findings carried forward from the prior review so they don't silently disappear once their file scrolls out of the new diff
-6. **Posts** a single, idempotent summary comment on the PR
+3. **Reviews** each chunk with Claude LLM, producing schema-constrained findings
+4. **Verifies** each finding with a second cheaper LLM pass — fail-closed, so unverifiable findings are rejected
+5. **Grounds** every finding against the actual repo (file exists? line in range? snippet matches?) — drops or downweights anything that doesn't check out.
+On a re-run, also re-grounds findings carried forward from the prior review so they don't silently disappear once their file scrolls out of the new diff
+6. **Posts** a single, independent summary comment on the PR
 
 ## Architecture
 
 ```
 diff/fetcher.py → diff/chunker.py → llm/client.py → verify/grounding.py → github/poster.py
-     │                  │                  │                  │
-     │           tree-sitter AST      review call +       file/line/snippet
-     │           boundary detection   verify call          checks + LLM
-     │           + heuristic fallback  (structured output)  verification
+     │                  │                  │                      │
+     │           tree-sitter AST       review call +           file/line/snippet
+     │           boundary detection    verify call for            checks + LLM
+     │           + heuristic fallback   matching structured output   verification
      │
   git diff (scoped to since-last-review SHA when available)
 ```
