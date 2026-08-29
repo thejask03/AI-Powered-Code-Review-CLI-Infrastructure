@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -e ".[dev]"
+      - run: pytest tests/unit tests/contract -v --cov=ai_review --cov-report=term-missing
+      # No --cov-fail-under yet: this just establishes a visible baseline.
+      # Add a threshold once there's a real number to set it against.
+      # tests/evals runs separately (not on every PR) since it calls a real
+      # or recorded model and is graded, not pass/fail in the pytest sense

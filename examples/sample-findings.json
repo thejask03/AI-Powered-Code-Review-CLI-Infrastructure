@@ -1,0 +1,41 @@
+{
+  "pr_number": 42,
+  "commit_sha": "a1b2c3d",
+  "chunks_reviewed": 2,
+  "chunks_skipped": 0,
+  "findings": [
+    {
+      "file": "src/app/orders.py",
+      "line_start": 88,
+      "line_end": 88,
+      "severity": "critical",
+      "category": "bug",
+      "message": "Loop bound is off by one; range(len(items) + 1) will raise an IndexError on the last iteration.",
+      "suggested_fix": "range(len(items))",
+      "code_snippet": "for i in range(len(items) + 1):",
+      "confidence": 0.92
+    },
+    {
+      "file": "src/app/orders.py",
+      "line_start": 104,
+      "line_end": 106,
+      "severity": "suggestion",
+      "category": "readability",
+      "message": "This nested conditional could be flattened with an early return for clarity.",
+      "suggested_fix": null,
+      "code_snippet": "if order.is_valid:\n    if order.total > 0:\n        process(order)",
+      "confidence": 0.65
+    },
+    {
+      "file": "src/app/orders.py",
+      "line_start": 12,
+      "line_end": 12,
+      "severity": "info",
+      "category": "style",
+      "message": "Unused import.",
+      "suggested_fix": "Remove `import json`",
+      "code_snippet": "import json",
+      "confidence": 0.98
+    }
+  ]
+}
