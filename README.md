@@ -41,8 +41,8 @@ diff/fetcher.py → diff/chunker.py → llm/client.py → verify/grounding.py �
 # Install
 pip install -e ".[dev]"
 
-# Run tests
-pytest tests/unit -v
+# Run tests (what CI runs)
+pytest tests/unit tests/contract -v --cov=ai_review --cov-report=term-missing
 
 # Validate a hand-written findings JSON
 ai-review local examples/sample-findings.json --min-severity warning
