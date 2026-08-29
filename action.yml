@@ -1,5 +1,8 @@
-name: "AI Code Review"
+name: "ai-review-cli"
 description: "Schema-enforced AI code review, posted as PR comments"
+branding:
+  icon: "eye"
+  color: "blue"
 inputs:
   anthropic-api-key:
     description: "API key for the LLM"
@@ -22,7 +25,9 @@ runs:
       with:
         python-version: "3.11"
     - shell: bash
-      run: pip install .  # installs from the action's checkout; switch to `pip install ai-review` after PyPI publish
+      # Pinned to the PyPI release matching this action's tag. Bump this
+      # version string whenever a new tag/release is cut.
+      run: pip install "ai-review-cli==0.1.0"
     - shell: bash
       env:
         ANTHROPIC_API_KEY: ${{ inputs.anthropic-api-key }}

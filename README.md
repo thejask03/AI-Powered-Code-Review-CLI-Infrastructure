@@ -75,7 +75,7 @@ jobs:
       pull-requests: write
       contents: read
     steps:
-      - uses: your-username/ai-code-review-cli@v0.1.0
+      - uses: thejask03/AI-Powered-Code-Review-CLI-Infrastructure@v0.1.0
         with:
           anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
 ```
@@ -106,7 +106,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}   # REQUIRED under pull_request_target
           fetch-depth: 0                                    # still required, see diff/fetcher.py
-      - uses: your-username/ai-code-review-cli@v0.1.0
+      - uses: thejask03/AI-Powered-Code-Review-CLI-Infrastructure@v0.1.0
         with:
           anthropic-api-key: ${{ secrets.ANTHROPIC_API_KEY }}
 ```
